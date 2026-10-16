@@ -1,0 +1,252 @@
+/* ─── SHAR7 BEL LEBNENE (Raycast Mobile Navbar — 100% Clone) ──────────────────
+   Kel l-ar2am hon ma7touta mn l-CSS l-7a2i2i tab3 raycast.com (Navbar-module,
+   NavLink-module, Button-module) — mish takhmin. L-tokens tab3on:
+     --spacing: 0-5=4px, 1=8px, 1-5=12px, 2=16px, 3=24px, 4=32px, 6=48px
+     --rounding: sm=6px, normal=8px, lg=16px
+     --grey: 50=#e6e6e6, 100=#cdcece, 200=#9c9c9d, 500=#2f3031
+     --navbar-height = 58px
+
+   Kif byeshteghel (metel Raycast bel 7arf):
+   1. Ma fi overlay menfasel. Nafs l-card (.rc-navbar) hiye yalli btekbar
+      mn 58px la toul l-menu kello b-'transition: height .3s'.
+   2. L-hamburger ma byet7arrak mn ma7allo abadan: l-3 khtout (1px) byetla2o
+      bel nos w byesiro X, w l-zerr kello byelf 180deg b-.5s.
+   3. Ta7t l-links fi khat fasel (#ffffff1a) w ta7to l-zerr l-abyad tab3 Raycast
+      ('light' button) ma3 nafs l-box-shadow l-mtba2a.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+/* Container: fixed bel top, padding 16px men l-jwenib → l-card ma bitlza2 bel 7ayet */
+.rc-container {
+  z-index: 100;
+  width: 100%;
+  padding: 16px 16px 0 16px;
+  overscroll-behavior: contain;
+  justify-content: center;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+/* Lamma l-menu maftou7: l-screen kello byen2afal 100%, ma3 backdrop blur ghame2 w touch-action none
+   kermel l-user ma y2dar y7arrik l-shishe nzool aw tl;oo3 abadan */
+.rc-container.rc-open {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.65);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+/* L-card nafsa: gradient ghame2 + blur 5px + border rafi3 + inset highlight fo2 */
+.rc-navbar {
+  width: 100%;
+  max-width: 1204px;
+  height: 58px;
+  padding: 16px;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  border: 1px solid #ffffff0f;
+  border-radius: 16px;
+  will-change: height, transform;
+  background: linear-gradient(137deg, #111214bf 4.87%, #0c0d0fe6 75.88%);
+  grid-template-rows: 24px auto;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  transition: height 0.3s, transform 0.3s;
+  display: grid;
+  overflow: hidden;
+  transform: translate(0, 0);
+  box-shadow: inset 0 1px 1px #ffffff26;
+}
+
+/* Saff l-logo + l-toggle (24px toul) */
+.rc-logoContainer {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+
+.rc-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+  transition: transform 0.2s;
+}
+.rc-logo:hover,
+.rc-logo:focus-visible {
+  transform: scale(1.05);
+}
+
+.rc-logoMark {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #ffffff0f;
+  border: 1px solid #ffffff1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffffe6;
+}
+
+.rc-logoText {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: #e6e6e6;
+}
+.rc-logoText span {
+  color: #6a6b6c;
+}
+
+/* L-hamburger: 24x16, 3 khtout 1px */
+.rc-navToggle {
+  cursor: pointer;
+  will-change: transform;
+  width: 24px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  transition: transform 0.5s, opacity 0.3s;
+  position: relative;
+  transform: translateY(0) rotate(0);
+}
+/* Touch target akbar (44px) bala ma yghayyer l-shakl */
+.rc-navToggle::before {
+  content: '';
+  position: absolute;
+  inset: -14px -10px;
+}
+
+.rc-navToggleLine {
+  will-change: auto;
+  background: #ffffffe6;
+  width: 100%;
+  height: 1px;
+  transition: transform 0.5s, opacity 0.25s;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.rc-navToggleLine:nth-child(1) { top: 10%; }
+.rc-navToggleLine:nth-child(2) { top: 50%; }
+.rc-navToggleLine:nth-child(3) { top: 90%; }
+
+/* Lamma maftou7: l-zerr byelf 180deg w l-khtout byesiro X */
+.rc-open .rc-navToggle {
+  transform: translateY(0) rotate(180deg);
+}
+.rc-open .rc-navToggleLine:nth-child(1) {
+  top: 50%;
+  transform: translate(-50%) rotate(-45deg);
+}
+.rc-open .rc-navToggleLine:nth-child(2) {
+  opacity: 0;
+  top: 50%;
+  transform: translate(-50%);
+}
+.rc-open .rc-navToggleLine:nth-child(3) {
+  top: 50%;
+  transform: translate(-50%) rotate(45deg);
+}
+
+/* L-links: column, gap 4px, padding 48px fo2 w 32px ta7et */
+.rc-navigation {
+  gap: 4px;
+  padding: 48px 0 32px;
+  flex-direction: column;
+  display: flex;
+}
+
+/* NavLink tab3 Raycast: 14px/500, #9c9c9d, radius 6px, text bel nos */
+.rc-navLink {
+  display: block;
+  text-align: center;
+  padding: 12px 8px;
+  color: #9c9c9d;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  transition: all 0.2s ease-in-out;
+}
+.rc-navLink:focus {
+  outline: none;
+  background: #ffffff0d;
+}
+.rc-navLink:hover {
+  color: #fff;
+}
+
+/* Khat fasel + l-zerr ta7et */
+.rc-secondary {
+  padding-top: 32px;
+  border-top: 1px solid #ffffff1a;
+  display: flex;
+}
+
+/* Button-module 'light' tab3 Raycast — nafs l-shadows l-mtba2a bel 7arf */
+.rc-button {
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 12px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  transition: background-image 0.2s, background-color 0.2s, box-shadow 0.2s ease-in-out, transform 0.1s ease-in-out;
+  display: inline-flex;
+}
+.rc-button > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.rc-button--light {
+  flex: 1;
+  color: #2f3031;
+  background: #e6e6e6;
+  box-shadow: 0 0 0 2px #00000080, 0 0 14px #ffffff30, inset 0 -1px 0.4px #0003, inset 0 1px 0.4px #fff;
+}
+.rc-button--light:hover {
+  background: #fff;
+}
+.rc-button--light:active {
+  background: #cdcece;
+  transform: scale(0.98);
+}
+.rc-button--light:focus-visible {
+  outline: none;
+  box-shadow: inset 0 -1px 0.4px #0003, inset 0 1px 0.4px #fff, 0 0 0 2px #f4f4f4, 0 0 0 2px #00000080, 0 0 14px #ffffff30;
+}
+
+/* Fo2 l-880px (breakpoint Raycast) l-mobile navbar bikhtefe w byerja3 l-desktop bar */
+@media (min-width: 880px) {
+  .rc-container {
+    display: none;
+  }
+}
